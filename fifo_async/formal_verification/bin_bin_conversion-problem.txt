@@ -1,0 +1,14 @@
+[GENERAL]
+model_file: ../verilog/bin_gray_conversion.v[oh_bin2bin]
+
+[DEFAULT]
+bmc_length: 80
+trace_prefix: trace_binbin
+trace_vars_change: True
+trace_all_vars: True
+
+[preserved-values]
+description: "Conversion is simmetric"
+formula: in = out
+verification: safety
+prove: True

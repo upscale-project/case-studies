@@ -1,0 +1,16 @@
+[GENERAL]
+model_file: ../verilog/oh_fifo_generic-single.v[oh_dsync],reset_beh.ets
+add_clock: True
+abstract_clock: True
+
+[DEFAULT]
+bmc_length: 80
+trace_prefix: trace_dsync
+trace_vars_change: True
+trace_all_vars: True
+
+[Reset_sync_pipe]
+description: "Sync pipe is 0 after reset"
+formula: (reset_done & negedge(nreset)) -> (sync_pipe = 0_3)
+verification: safety
+prove: True
