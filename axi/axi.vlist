@@ -1,0 +1,9 @@
+-DCFG_ASIC=0
+./src/emesh/hdl/*
+./src/common/hdl/oh_dsync.v
+./src/common/hdl/oh_fifo_sync.v
+./src/common/hdl/oh_memory_dp.v
+./src/common/hdl/oh_memory_ram.v
+./src/axi/hdl/emaxi.v
+./src/axi/hdl/esaxi.v
+./top_axi.v
