@@ -1,5 +1,5 @@
 [GENERAL]
-model_file: ../verilog/bin_gray_conversion.v[oh_gray2gray]
+model_files: ../verilog/bin_gray_conversion.v[oh_gray2gray]
 
 [DEFAULT]
 bmc_length: 80
@@ -9,6 +9,6 @@ trace_all_vars: True
 
 [preserved-values]
 description: "Conversion is simmetric"
-formula: in = out
+properties: in = out
 verification: safety
 prove: True

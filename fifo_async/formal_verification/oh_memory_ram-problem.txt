@@ -1,5 +1,5 @@
 [GENERAL]
-model_file: ../verilog/oh_fifo_generic-single.v[oh_memory_ram]
+model_files: ../verilog/oh_fifo_generic-single.v[oh_memory_ram]
 add_clock: True
 abstract_clock: True
 
@@ -11,21 +11,21 @@ trace_all_vars: True
 
 [write_value]
 description: "Write value at position"
-formula: (posedge(wr_clk) & (wr_wem = ones(wr_wem)) & (wr_en = 1_1)) -> (memacc(next(ram), wr_addr) = wr_din)
+properties: (posedge(wr_clk) & (wr_wem = ones(wr_wem)) & (wr_en = 1_1)) -> (memacc(next(ram), wr_addr) = wr_din)
 verification: safety
 prove: True
 expected: True
 
 [read_value]
 description: "Read value at position"
-formula: (posedge(rd_clk) & (rd_en = 1_1)) -> (memacc(ram, rd_addr) = next(rd_dout))
+properties: (posedge(rd_clk) & (rd_en = 1_1)) -> (memacc(ram, rd_addr) = next(rd_dout))
 verification: safety
 prove: True
 expected: True
 
 [unchange_value]
 description: "Values does not change at address"
-formula: (wr_addr != rnd_addr.value) -> (memacc(next(ram), rnd_addr.value) = memacc(ram, rnd_addr.value))
+properties: (wr_addr != rnd_addr.value) -> (memacc(next(ram), rnd_addr.value) = memacc(ram, rnd_addr.value))
 generators: rnd_package=Random(rd_dout);rnd_addr=Random(wr_addr) 
 verification: safety
 prove: True
@@ -33,7 +33,7 @@ expected: True
 
 [never_read_value]
 description: "After reset, memory will never read a value"
-formula: !(posedge(rd_clk) & (rd_en = 1_1) & (next(rd_dout) = rnd_package.value))
+properties: !(posedge(rd_clk) & (rd_en = 1_1) & (next(rd_dout) = rnd_package.value))
 verification: safety
 generators: rnd_package=Random(rd_dout)
 expected: False

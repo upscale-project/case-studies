@@ -1,5 +1,5 @@
 [GENERAL]
-model_file: axi.vlist[top_axi],reset.ets,assignments.ssts
+model_files: axi.vlist[top_axi],reset.ets,assignments.ssts
 clock_behaviors: DetClock(axi_aclk, 1)
 vcd: True
 
@@ -9,57 +9,57 @@ bmc_length: 20
 
 [RESET_CHECK]
 description: "Basic sanity check"
-formula: !reset_done
+properties: !reset_done
 expected: False
 verification: safety
 
 [MASTER_DRIVING_LOW_ON_RESET]
 description: "During reset, arvalid, awvalid and wvalid must be driven low"
-formula: (posedge(cosa_axi_aclk) & posedge(cosa_axi_aresetn)) -> (!next(cosa_axi_arvalid) & !next(cosa_axi_awvalid) & !next(cosa_axi_wvalid))
+properties: (posedge(cosa_axi_aclk) & posedge(cosa_axi_aresetn)) -> (!next(cosa_axi_arvalid) & !next(cosa_axi_awvalid) & !next(cosa_axi_wvalid))
 expected: True
 prove: True
 verification: safety
 
 [SLAVE_DRIVING_LOW_ON_RESET]
 description: "During reset, rvalid and bvalid must be driven low"
-formula: (posedge(cosa_axi_aclk) & posedge(cosa_axi_aresetn)) -> (!next(cosa_axi_rvalid) & !next(cosa_axi_bvalid))
+properties: (posedge(cosa_axi_aclk) & posedge(cosa_axi_aresetn)) -> (!next(cosa_axi_rvalid) & !next(cosa_axi_bvalid))
 expected: True
 prove: True
 verification: safety
 
 [WRADDR_CHANNEL_VALID_BEFORE_READY]
 description: "A source is not permitted to wait for ready before asserting valid"
-formula: !(cosa_axi_awvalid & next(cosa_axi_awready))
+properties: !(cosa_axi_awvalid & next(cosa_axi_awready))
 expected: False
 verification: safety
 
 [WRDATA_CHANNEL_VALID_BEFORE_READY]
 description: "A source is not permitted to wait for ready before asserting valid"
-formula: !(cosa_axi_wvalid & next(cosa_axi_wready))
+properties: !(cosa_axi_wvalid & next(cosa_axi_wready))
 expected: False
 verification: safety
 
 [WRRESP_CHANNEL_VALID_BEFORE_READY]
 description: "A source is not permitted to wait for ready before asserting valid"
-formula: !(cosa_axi_bvalid & next(cosa_axi_bready))
+properties: !(cosa_axi_bvalid & next(cosa_axi_bready))
 expected: False
 verification: safety
 
 [RDADDR_CHANNEL_VALID_BEFORE_READY]
 description: "A source is not permitted to wait for ready before asserting valid"
-formula: !(cosa_axi_arvalid & next(cosa_axi_arready))
+properties: !(cosa_axi_arvalid & next(cosa_axi_arready))
 expected: False
 verification: safety
 
 [RDDATA_CHANNEL_VALID_BEFORE_READY]
 description: "A source is not permitted to wait for ready before asserting valid"
-formula: !(cosa_axi_rvalid & next(cosa_axi_rready))
+properties: !(cosa_axi_rvalid & next(cosa_axi_rready))
 expected: False
 verification: safety
 
 [AWRVALID_HOLD_UNTIL_READY]
 description: "Write address VALID must stay asserted until receiving READY"
-formula: cosa_axi_awvalid -> (cosa_axi_awready | next(cosa_axi_awready) | next(cosa_axi_awvalid))
+properties: cosa_axi_awvalid -> (cosa_axi_awready | next(cosa_axi_awready) | next(cosa_axi_awvalid))
 verification: safety
 expected: True
 prove: True
@@ -67,8 +67,8 @@ precondition: reset_done
 
 [WRVALID_HOLD_UNTIL_READY]
 description: "Write data VALID must stay asserted until receiving READY"
-# formula: cosa_axi_wvalid -> (cosa_axi_wready | next(cosa_axi_wready) | next(cosa_axi_wvalid))
-formula: negedge(cosa_axi_wvalid) -> cosa_axi_wready
+# properties: cosa_axi_wvalid -> (cosa_axi_wready | next(cosa_axi_wready) | next(cosa_axi_wvalid))
+properties: negedge(cosa_axi_wvalid) -> cosa_axi_wready
 verification: safety
 expected: True
 prove: True
@@ -76,7 +76,7 @@ precondition: reset_done
 
 [BVALID_HOLD_UNTIL_READY]
 description: "Write resonse VALID must stay asserted until receiving READY"
-formula: negedge(cosa_axi_bvalid) -> cosa_axi_bready
+properties: negedge(cosa_axi_bvalid) -> cosa_axi_bready
 verification: safety
 expected: True
 prove: True
@@ -84,8 +84,8 @@ precondition: reset_done
 
 [ARVALID_HOLD_UNTIL_READY]
 description: "Read address VALID must stay asserted until receiving READY"
-# formula: negedge(cosa_axi_arvalid) -> cosa_axi_arready
-formula: (posedge(cosa_axi_aclk) & cosa_axi_arvalid & !cosa_axi_arready) -> next(cosa_axi_arvalid)
+# properties: negedge(cosa_axi_arvalid) -> cosa_axi_arready
+properties: (posedge(cosa_axi_aclk) & cosa_axi_arvalid & !cosa_axi_arready) -> next(cosa_axi_arvalid)
 verification: safety
 expected: True
 prove: True
@@ -93,8 +93,8 @@ precondition: reset_done
 
 [RVALID_HOLD_UNTIL_READY]
 description: "Read data VALID must stay asserted until receiving READY"
-# formula: cosa_axi_rvalid -> (cosa_axi_rready | next(cosa_axi_rready) | next(cosa_axi_rvalid))
-formula: negedge(cosa_axi_rvalid) -> cosa_axi_rready
+# properties: cosa_axi_rvalid -> (cosa_axi_rready | next(cosa_axi_rready) | next(cosa_axi_rvalid))
+properties: negedge(cosa_axi_rvalid) -> cosa_axi_rready
 verification: safety
 expected: True
 prove: True
@@ -103,7 +103,7 @@ precondition: reset_done
 # Write Response
 [BVALID_WAIT_FOR_WLAST]
 description: "Must wait for WLAST before BVALID"
-formula: posedge(cosa_axi_bvalid) -> cosa_axi_wlast
+properties: posedge(cosa_axi_bvalid) -> cosa_axi_wlast
 verification: safety
 expected: True
 prove: True
@@ -111,7 +111,7 @@ precondition: reset_done
 
 [BVALID_WAIT_FOR_WVALID_AND_WREADY]
 description: "Must wait for WVALID and WREADY before asserting BVALID"
-formula: posedge(cosa_axi_bvalid) -> (cosa_axi_wvalid & cosa_axi_wready)
+properties: posedge(cosa_axi_bvalid) -> (cosa_axi_wvalid & cosa_axi_wready)
 verification: safety
 expected: True
 prove: True
