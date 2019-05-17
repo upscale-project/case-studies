@@ -6,9 +6,11 @@ bmc_length: 80
 trace_prefix: trace_binbin
 trace_vars_change: True
 trace_all_vars: True
+# performance is much better with btor: pysmt-install --btor
+solver_name: btor
 
 [preserved-values]
-description: "Conversion is simmetric"
+description: "Conversion is symmetric"
 properties: in = out
 verification: safety
 prove: True

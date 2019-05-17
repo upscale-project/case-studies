@@ -1,7 +1,5 @@
 [GENERAL]
 model_files: ../verilog/oh_fifo_generic-single.v[oh_dsync],reset_beh.ets
-add_clock: True
-abstract_clock: True
 
 [DEFAULT]
 bmc_length: 80

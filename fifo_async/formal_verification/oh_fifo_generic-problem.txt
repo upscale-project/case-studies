@@ -1,12 +1,11 @@
 [GENERAL]
 model_files: ../verilog/oh_fifo_generic-single.v[oh_fifo_generic],reset_beh.ets
 assume_if_true: True
-add_clock: True
-abstract_clock: True
+clock_behaviors: DetClock(wr_clk, 1);DetClock(rd_clk, 1)
 vcd: True
 
 [DEFAULT]
-bmc_length: 180
+bmc_length: 20
 trace_prefix: trace
 trace_vars_change: True
 trace_all_vars: True
@@ -74,12 +73,12 @@ properties: reset_performed -> (!((full = 1_1) & (prog_full = 1_1)))
 verification: safety
 expected: False
 
+# this property seems significantly harder than never_full_and_empty for some reason
 [never_empty_and_progfull]
 description: "After reset, empty and prog_full should never be high at the same time"
 properties: reset_performed -> (!((empty = 1_1) & (prog_full = 1_1)))
 verification: safety
-prove: True
-expected: True
+expected: Unknown
 
 # [full_implies_progfull]
 # description: "After reset, full implies prog_full"
