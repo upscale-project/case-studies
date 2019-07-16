@@ -116,3 +116,17 @@ verification: safety
 expected: True
 prove: True
 precondition: reset_done
+
+[WRAP_BURST]
+description: "Check that wrap len + 1 is a power of two"
+# check that it's 1, 3, 7, or 15
+properties: (cosa_axi_awvalid & (cosa_axi_awburst = 2_2))
+            -> ((cosa_axi_awlen = 1_8) |
+                (cosa_axi_awlen = 3_8) |
+                (cosa_axi_awlen = 7_8) |
+                (cosa_axi_awlen = 15_8)
+               )
+verification: safety
+expected: True
+prove: True
+precondition: reset_done

@@ -8,6 +8,9 @@ cosa_axi_aresetn: Bool ;
 # Write Address Channel
 cosa_axi_awvalid: Bool ;
 cosa_axi_awready: Bool ;
+cosa_axi_awburst: BV(2) ;
+cosa_axi_awlen:   BV(8) ;
+cosa_axi_awsize:  BV(3) ;
 
 # Write Data Channel
 cosa_axi_wvalid:  Bool ;
@@ -21,6 +24,9 @@ cosa_axi_bready:  Bool ;
 # Read Address Channel
 cosa_axi_arvalid: Bool ;
 cosa_axi_arready: Bool ;
+cosa_axi_arburst: BV(2) ;
+cosa_axi_arlen:   BV(8) ;
+cosa_axi_arsize:  BV(3) ;
 
 # Read Data Channel
 cosa_axi_rvalid:  Bool ;
@@ -38,6 +44,9 @@ cosa_axi_aresetn <-> (axi_aresetn = 1_1) ;
 # Write Address Channel
 cosa_axi_awvalid <-> (m_axi_awvalid = 1_1) ;
 cosa_axi_awready <-> (s_axi_awready = 1_1) ;
+cosa_axi_awburst = m_axi_awburst ;
+cosa_axi_awlen = m_axi_awlen ;
+cosa_axi_awsize = m_axi_awsize ;
 
 # Write Data Channel
 cosa_axi_wvalid  <-> (m_axi_wvalid  = 1_1) ;
@@ -51,6 +60,9 @@ cosa_axi_bready  <-> (m_axi_bready  = 1_1) ;
 # Read Address Channel
 cosa_axi_arvalid <-> (m_axi_arvalid = 1_1) ;
 cosa_axi_arready <-> (s_axi_arready = 1_1) ;
+cosa_axi_arburst = m_axi_arburst ;
+cosa_axi_arlen = m_axi_arlen ;
+cosa_axi_arsize = m_axi_arsize ;
 
 # Read Data Channel
 cosa_axi_rvalid  <-> (s_axi_rvalid  = 1_1) ;
